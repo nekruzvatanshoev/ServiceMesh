@@ -13,7 +13,8 @@ public class OrderItemService {
     }
 
     public String addItemToCart(String id) {
-        producer.sendMessage("Added " + id + " to shopping cart!");
+        //producer.sendMessage("Added " + id + " to shopping cart!");
+        producer.sendMessage(id);
         return "Added " + id + " shopping to cart!";
     }
 }
