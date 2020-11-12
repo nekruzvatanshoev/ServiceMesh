@@ -1,11 +1,18 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/streadway/amqp"
 	"log"
 	"time"
 )
+
+type Item struct {
+	Id string `json:"id"`
+	Name string `json:"name"`
+
+}
 
 func main() {
 	fmt.Println("Starting a RabbitMQ consumer...")
@@ -43,10 +50,14 @@ func main() {
 		nil)
 
 	forever := make(chan bool)
-
+	item := Item{}
 	go func() {
 		for d := range msgs {
 			log.Printf("Received a message: %s", d.Body)
+
+			json.Unmarshal(d.Body,&item)
+			log.Println(item.Id)
+			log.Println(item.Name)
 
 			ch.Publish(
 				"",

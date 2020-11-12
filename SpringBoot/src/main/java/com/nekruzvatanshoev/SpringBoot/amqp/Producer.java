@@ -1,5 +1,6 @@
 package com.nekruzvatanshoev.SpringBoot.amqp;
 
+import com.nekruzvatanshoev.SpringBoot.domain.Item;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ public class Producer {
         this.routingKey = routingKey;
     }
 
-    public void sendMessage(String message) {
-        this.tempalte.convertAndSend(exchange, routingKey, message);
+    public void sendMessage(Item item) {
+        this.tempalte.convertAndSend(exchange, routingKey, item);
     }
 }

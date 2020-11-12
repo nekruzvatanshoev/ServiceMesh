@@ -18,7 +18,7 @@ public class ItemController {
 
     @PostMapping("/items")
     public ResponseEntity<Item> addToShoppingCart(@RequestBody Item item) {
-        orderItemService.addItemToCart(item.getId());
+        orderItemService.addItemToCart(item);
         System.out.println(item);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 public class Consumer {
     @RabbitListener(queues="${nekruzvatanshoev.amqp.queue}")
     public void onMessage(Message message) {
-        System.out.println(message);
+        System.out.println(new String(message.getBody()));
     }
 }
