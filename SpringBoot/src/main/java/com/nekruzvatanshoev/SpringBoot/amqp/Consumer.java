@@ -5,7 +5,7 @@ import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class Consumer {
     @RabbitListener(queues="${nekruzvatanshoev.amqp.queue}")
     public void onMessage(Message message) {

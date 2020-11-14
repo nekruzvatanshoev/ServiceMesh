@@ -1,11 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/streadway/amqp"
 	"log"
-	"time"
 )
 
 type Item struct {
@@ -48,40 +46,47 @@ func main() {
 		false,
 		false,
 		nil)
-
-	forever := make(chan bool)
-	item := Item{}
-	go func() {
-		for d := range msgs {
-			log.Printf("Received a message: %s", d.Body)
-
-			json.Unmarshal(d.Body,&item)
-			log.Println(item.Id)
-			log.Println(item.Name)
-
-			ch.Publish(
-				"",
-				q.Name,
-				false,
-				false,
-				amqp.Publishing{
-					Headers:         nil,
-					ContentType:     "text/plain",
-					ContentEncoding: "",
-					DeliveryMode:    0,
-					Priority:        0,
-					CorrelationId:   "",
-					ReplyTo:         "",
-					Expiration:      "",
-					MessageId:       "",
-					Timestamp:       time.Time{},
-					Type:            "",
-					UserId:          "",
-					AppId:           "",
-					Body:            []byte(fmt.Sprintf("Got it! Item %s was added to shopping cart!", d.Body)),
-				})
-		}
-	}()
-
-	<-forever
+	fmt.Println(msgs)
+	//forever := make(chan bool)
+	//item := Item{}
+	//go func() {
+	//	for d := range msgs {
+	//		log.Printf("Received a message: %s", d.Body)
+	//
+	//		err := json.Unmarshal(d.Body,&item)
+	//		if err != nil {
+	//			log.Fatalf(err.Error())
+	//		}
+	//		log.Println(item.Id)
+	//		log.Println(item.Name)
+	//
+	//		err = ch.Publish(
+	//			"",
+	//			q.Name,
+	//			false,
+	//			false,
+	//			amqp.Publishing{
+	//				Headers:         nil,
+	//				ContentType:     "text/plain",
+	//				ContentEncoding: "",
+	//				DeliveryMode:    0,
+	//				Priority:        0,
+	//				CorrelationId:   "",
+	//				ReplyTo:         "",
+	//				Expiration:      "",
+	//				MessageId:       "",
+	//				Timestamp:       time.Time{},
+	//				Type:            "",
+	//				UserId:          "",
+	//				AppId:           "",
+	//				Body:            []byte(fmt.Sprintf("Got it! Item %s was added to shopping cart!", d.Body)),
+	//			})
+	//
+	//		if err != nil {
+	//			log.Fatalf(err.Error())
+	//		}
+	//	}
+	//}()
+	//
+	//<-forever
 }
